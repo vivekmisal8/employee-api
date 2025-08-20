@@ -1,0 +1,114 @@
+const express = require("express");
+const app = express();
+const PORT = 3000;
+
+// Categories Data
+const categoriesData = {
+  "categories": [
+    {
+      "id": 1,
+      "name": "Electronics",
+      "products": [
+        { "id": 101, "name": "Wireless Mouse", "price": 499.99, "currency": "INR", "in_stock": true, "rating": 4.3 },
+        { "id": 102, "name": "Bluetooth Headphones", "price": 1499.0, "currency": "INR", "in_stock": true, "rating": 4.6 },
+        { "id": 103, "name": "Smart Watch", "price": 2499.0, "currency": "INR", "in_stock": false, "rating": 4.1 },
+        { "id": 104, "name": "Portable Speaker", "price": 1999.0, "currency": "INR", "in_stock": true, "rating": 4.4 },
+        { "id": 105, "name": "Digital Camera", "price": 9999.0, "currency": "INR", "in_stock": true, "rating": 4.7 }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Computers",
+      "products": [
+        { "id": 201, "name": "Gaming Keyboard", "price": 2299.5, "currency": "INR", "in_stock": false, "rating": 4.8 },
+        { "id": 202, "name": "External Hard Drive", "price": 3999.0, "currency": "INR", "in_stock": true, "rating": 4.5 },
+        { "id": 203, "name": "Laptop Stand", "price": 999.0, "currency": "INR", "in_stock": true, "rating": 4.3 },
+        { "id": 204, "name": "Mechanical Mouse Pad", "price": 499.0, "currency": "INR", "in_stock": true, "rating": 4.0 },
+        { "id": 205, "name": "Gaming Laptop", "price": 54999.0, "currency": "INR", "in_stock": true, "rating": 4.9 }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Home Appliances",
+      "products": [
+        { "id": 301, "name": "Microwave Oven", "price": 7499.0, "currency": "INR", "in_stock": true, "rating": 4.4 },
+        { "id": 302, "name": "Refrigerator", "price": 15999.0, "currency": "INR", "in_stock": false, "rating": 4.7 },
+        { "id": 303, "name": "Washing Machine", "price": 12999.0, "currency": "INR", "in_stock": true, "rating": 4.6 },
+        { "id": 304, "name": "Ceiling Fan", "price": 1999.0, "currency": "INR", "in_stock": true, "rating": 4.2 },
+        { "id": 305, "name": "Air Conditioner", "price": 28999.0, "currency": "INR", "in_stock": true, "rating": 4.8 }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Mobile",
+      "products": [
+        { "id": 401, "name": "Smartphone X1", "price": 12999.0, "currency": "INR", "in_stock": true, "rating": 4.2 },
+        { "id": 402, "name": "Smartphone Z Pro", "price": 18999.0, "currency": "INR", "in_stock": true, "rating": 4.6 },
+        { "id": 403, "name": "Smartphone Ultra", "price": 25999.0, "currency": "INR", "in_stock": false, "rating": 4.7 },
+        { "id": 404, "name": "Feature Phone Classic", "price": 1999.0, "currency": "INR", "in_stock": true, "rating": 4.0 },
+        { "id": 405, "name": "Foldable Smartphone", "price": 79999.0, "currency": "INR", "in_stock": true, "rating": 4.9 }
+      ]
+    }
+  ]
+};
+
+// Report Data
+const reportData = {
+  "report": {
+    "title": "Monthly Sales Summary",
+    "generated_on": "2025-08-13T17:00:00Z",
+    "filters": { "region": "West India", "month": "July", "year": 2025 },
+    "metrics": {
+      "total_sales": 1250000,
+      "units_sold": 4500,
+      "average_order_value": 277.78,
+      "top_performing_products": [
+        { "name": "Smartphone X200", "units_sold": 1200, "revenue": 360000 },
+        { "name": "Laptop Pro 15", "units_sold": 800, "revenue": 480000 },
+        { "name": "Wireless Mouse", "units_sold": 500, "revenue": 249995 },
+        { "name": "Bluetooth Headphones", "units_sold": 650, "revenue": 974350 },
+        { "name": "Smart Watch", "units_sold": 400, "revenue": 999600 },
+        { "name": "Portable Speaker", "units_sold": 300, "revenue": 599700 },
+        { "name": "Digital Camera", "units_sold": 150, "revenue": 1499850 }
+      ]
+    },
+    "trend": { "previous_month_sales": 1100000, "growth_percentage": 13.64 }
+  },
+  "status": "success"
+};
+
+// Unified Data (merged both)
+const mergedData = {
+  categoriesData,
+  reportData
+};
+
+// Routes
+app.get("/api/categories", (req, res) => {
+  res.json(categoriesData);
+});
+
+app.get("/api/categories/:name", (req, res) => {
+  const category = categoriesData.categories.find(
+    c => c.name.toLowerCase() === req.params.name.toLowerCase()
+  );
+  if (category) {
+    res.json(category);
+  } else {
+    res.status(404).json({ message: "Category not found" });
+  }
+});
+
+app.get("/api/report", (req, res) => {
+  res.json(reportData);
+});
+
+// NEW endpoint → merged
+app.get("/api/merged", (req, res) => {
+  res.json(mergedData);
+});
+
+// Start server
+app.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}`);
+});
