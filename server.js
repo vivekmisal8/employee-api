@@ -3,7 +3,8 @@ const xml2js = require("xml2js");
 const { create } = require("xmlbuilder2"); // 🟢 XML builder
 const app = express();
 const PORT = 3000;
-const HOST = 34.29.39.188;   // important for external access
+const HOST = "34.29.39.188";   // important for external access
+
 // Categories Data (no change)
 const categoriesData = {
   categories: [
