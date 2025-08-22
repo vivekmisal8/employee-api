@@ -2,7 +2,7 @@ const express = require("express");
 const xml2js = require("xml2js");
 const { create } = require("xmlbuilder2"); // 🟢 XML builder
 const app = express();
-const PORT = 80;
+const PORT = 8080;
 const HOST = "0.0.0.0";   // important for external access
 
 // Categories Data (no change)
