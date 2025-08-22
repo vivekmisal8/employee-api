@@ -2,8 +2,8 @@ const express = require("express");
 const xml2js = require("xml2js");
 const { create } = require("xmlbuilder2"); // 🟢 XML builder
 const app = express();
-const PORT = 3000;
-const HOST = "34.29.39.188";   // important for external access
+const PORT = 80;
+const HOST = "0.0.0.0";   // important for external access
 
 // Categories Data (no change)
 const categoriesData = {
@@ -230,5 +230,5 @@ app.get("/api/employees/:id", (req, res) => {
 
 // ---------------- START SERVER ----------------
 app.listen(PORT, HOST, () => {
-  console.log(`Server running at http://34.29.39.188:3000`);
+  console.log(`Server running at http://${HOST}:${PORT}`);
 });
